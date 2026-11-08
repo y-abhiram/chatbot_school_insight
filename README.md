@@ -58,35 +58,9 @@ Permissions are enforced by the backend and PostgreSQL reporting views. A role o
 
 ## System architecture
 
-```mermaid
-flowchart TD
-    User[Administrator / Faculty / Student] --> Web[Next.js + React web application]
-    Web --> API[FastAPI backend + SSE streaming]
-    API --> Auth[Session authentication + role and tenant policy]
-    Auth --> Graph[LangGraph conversation workflow]
+![School Insight system architecture](docs/images/system-architecture.svg)
 
-    Graph --> SQL[Database question: schema discovery + SQL generation]
-    SQL --> Guard[SQLGlot validation + approved view checks]
-    Guard --> DB[(PostgreSQL: scoped reporting views)]
-    DB --> Report[Verified results + summaries + charts]
-
-    Graph --> Retrieval[Manual question: hybrid document retrieval]
-    Retrieval --> Index[(pgvector + PostgreSQL text search)]
-    Index --> Rank[Local cross-encoder reranking]
-    Rank --> Answer[AI answer + validated page citations]
-
-    Report --> Stream[Streamed response and report events]
-    Answer --> Stream
-    Stream --> Web
-
-    Graph --> Providers[OpenAI / Google Gemini / Groq]
-    API --> AppDB[(Accounts, conversations, documents, audit history)]
-    API --> Redis[(Redis: queue + scoped cache)]
-    Redis --> Worker[Celery worker + scheduler]
-    Worker --> Ingest[PDF parsing + local embeddings]
-    Ingest --> Index
-    Worker --> Backups[Scheduled backups + restore verification]
-```
+[Open the full-size architecture diagram](docs/images/system-architecture.svg)
 
 ### How a question becomes an answer
 
