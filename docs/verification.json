@@ -1,0 +1,54 @@
+{
+  "verified_at": "2026-11-05T16:35:05.900695+00:00",
+  "python_environment": "Conda base",
+  "automated_tests": {
+    "passed": 86,
+    "failures": 0,
+    "errors": 0
+  },
+  "live_acceptance": {
+    "passed": 17,
+    "total": 17,
+    "scope": "Coverage across OpenAI gpt-5.4-mini and Gemini gemini-2.5-flash; see per-case evidence",
+    "report": "evaluation/acceptance-matrix.json"
+  },
+  "browser": {
+    "chat_checks": 26,
+    "completion_checks": 22,
+    "javascript_errors": 0
+  },
+  "real_model_streaming": {
+    "passed": true,
+    "delta_events": 2,
+    "first_delta_ms": 2246,
+    "final": {
+      "time_ms": 2412,
+      "kind": "answer",
+      "provider": "gemini",
+      "model": "gemini-2.5-flash"
+    }
+  },
+  "production_frontend_build": {
+    "passed": true,
+    "build_id": "SmEkxAJO5_VG-JcTSFgpG"
+  },
+  "operations": {
+    "database": true,
+    "redis": true,
+    "worker": true,
+    "api": true,
+    "latest_backup": "/home/jony/Documents/chat/.runtime/backups/20261105-215627",
+    "restore_verified": true,
+    "backup_age_hours": 0.14,
+    "backup_fresh": true
+  },
+  "local_https_certificate_verified": true,
+  "default_provider": "gemini",
+  "external_activation": {
+    "langsmith_published": false,
+    "langsmith_api_key_configured": false,
+    "public_domain_deployed": false,
+    "note": "Code/configuration provided; user LangSmith key and public domain/DNS are required for external activation."
+  },
+  "excluded": "Full application Docker deployment, per user instruction"
+}

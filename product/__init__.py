@@ -1,0 +1,1 @@
+"""School Insight application backend."""

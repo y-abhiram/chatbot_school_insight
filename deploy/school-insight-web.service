@@ -1,0 +1,15 @@
+[Unit]
+Description=School Insight Next.js
+After=network-online.target school-insight-api.service
+[Service]
+Type=simple
+User=jony
+WorkingDirectory=/home/jony/Documents/chat/web
+ExecStart=/home/jony/.nvm/versions/node/v24.15.0/bin/node /home/jony/Documents/chat/web/node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3000
+Environment=NODE_ENV=production
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+[Install]
+WantedBy=multi-user.target

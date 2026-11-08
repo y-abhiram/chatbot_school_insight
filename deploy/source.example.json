@@ -1,0 +1,54 @@
+{
+  "tenant_id": "example-organisation",
+  "name": "Example organisation",
+  "adapter": "generic",
+  "view_schema": "reporting",
+  "source_schema": "business",
+  "policies": {
+    "Admin": {
+      "scope": "Records explicitly permitted by your source reporting views",
+      "can": [
+        "Read permitted records",
+        "Consult organisation documents"
+      ],
+      "cannot": [
+        "Read another identity\u2019s private records",
+        "Change source data"
+      ],
+      "questions": [
+        "Show my permitted records"
+      ],
+      "manual_pages": []
+    },
+    "Faculty": {
+      "scope": "Records explicitly permitted by your source reporting views",
+      "can": [
+        "Read permitted records",
+        "Consult organisation documents"
+      ],
+      "cannot": [
+        "Read another identity\u2019s private records",
+        "Change source data"
+      ],
+      "questions": [
+        "Show my permitted records"
+      ],
+      "manual_pages": []
+    },
+    "Student": {
+      "scope": "Records explicitly permitted by your source reporting views",
+      "can": [
+        "Read permitted records",
+        "Consult organisation documents"
+      ],
+      "cannot": [
+        "Read another identity\u2019s private records",
+        "Change source data"
+      ],
+      "questions": [
+        "Show my permitted records"
+      ],
+      "manual_pages": []
+    }
+  }
+}

@@ -1,0 +1,3 @@
+export async function api<T>(path:string,init?:RequestInit):Promise<T>{const response=await fetch('/api'+path,{cache:'no-store',credentials:'same-origin',...init,headers:{...(init?.body instanceof FormData?{}:init?.body?{'Content-Type':'application/json'}:{}),...init?.headers}});if(!response.ok){let detail='The request could not be completed.';try{const body=await response.json();if(typeof body.detail==='string')detail=body.detail;}catch{}throw new Error(detail);}return response.json();}
+export const post=<T>(path:string,data:unknown)=>api<T>(path,{method:'POST',body:JSON.stringify(data)});
+export const format=(value:unknown)=>value===null||value===undefined?'—':typeof value==='number'?new Intl.NumberFormat('en',{maximumFractionDigits:2}).format(value):String(value);

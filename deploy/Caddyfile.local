@@ -1,0 +1,14 @@
+{
+	admin off
+	auto_https disable_redirects
+	skip_install_trust
+}
+# Local TLS verification. Trust the local Caddy CA only on your development device.
+https://localhost:3443 {
+	tls internal
+	reverse_proxy 127.0.0.1:3000 {
+		flush_interval -1
+	}
+	header X-Content-Type-Options nosniff
+	header Referrer-Policy same-origin
+}

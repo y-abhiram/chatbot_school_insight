@@ -1,0 +1,112 @@
+{
+  "verified_at": "2026-11-07T11:42:05.548351+00:00",
+  "url": "http://localhost:3080",
+  "checks": [
+    "postgres has no published host ports",
+    "redis has no published host ports",
+    "backend has no published host ports",
+    "Frontend binds only to loopback",
+    "backend container is healthy",
+    "backend runs as a non-root user",
+    "frontend container is healthy",
+    "frontend runs as a non-root user",
+    "worker container is healthy",
+    "worker runs as a non-root user",
+    "Frontend proxies API readiness to PostgreSQL and Redis",
+    "Existing chat UI is served",
+    "Anonymous private data request is rejected",
+    "Admin login and HttpOnly session cookie work through proxy",
+    "Dashboard returns four actual sample students",
+    "Cross-origin mutation is rejected",
+    "24-page manual is indexed and ready",
+    "Student login works",
+    "Student cannot access admin team data",
+    "Actual database enforces student scope and rejects raw-table access and writes",
+    "Streaming endpoint accepted: How many students are there?",
+    "No provider or workflow error: How many students are there?",
+    "Final SSE result arrived: How many students are there?",
+    "Live AI count matches four database students",
+    "Streaming endpoint accepted: Explain the leave approval process from the manual.",
+    "No provider or workflow error: Explain the leave approval process from the manual.",
+    "Final SSE result arrived: Explain the leave approval process from the manual.",
+    "Live manual answer includes page citations",
+    "Streaming endpoint accepted: Show Kiran's marks",
+    "No provider or workflow error: Show Kiran's marks",
+    "Final SSE result arrived: Show Kiran's marks",
+    "Student chat refuses another student\u2019s private marks",
+    "Repeat bootstrap preserves complete school schema and data",
+    "School schema and every sample row survive full container recreation",
+    "App accounts and existing login session persist after recreation",
+    "Indexed manual persists after recreation"
+  ],
+  "live_ai_requested": true,
+  "restart_requested": true,
+  "public_https_verified": false,
+  "aws_deployed": false,
+  "school_fingerprint": "057eea01c63af97b78ec14729ffa3ba3b8573ba88f69a6a3a016c8e7337e844f",
+  "passed": true,
+  "checks_passed": 36,
+  "automated_tests": {
+    "passed": 99,
+    "failed": 0,
+    "scope": "Original local database and application, including deployment configuration tests"
+  },
+  "backup_restore": {
+    "verified": true,
+    "counts": {
+      "users": 8,
+      "students": 4,
+      "documents": 1,
+      "accounts": 8
+    },
+    "isolated_restore_database": true,
+    "runtime_archive_verified": true
+  },
+  "docker": {
+    "engine": "28.2.2",
+    "compose": "5.7.0",
+    "platform": "linux/amd64",
+    "images": {
+      "school-insight-backend:local": "sha256:e4ee73ea511ce74588b8a4d1da47228b2c207915651c00cdd5799325b7509876",
+      "school-insight-frontend:local": "sha256:b55dfe15196b1166394149860e0ce3ef1b383737843ca539559194e242721bd7"
+    }
+  },
+  "caddy_configuration_valid": true,
+  "backend_dependencies_valid": true,
+  "backend_image_excludes_local_secrets": true,
+  "supplied_files_sha256": {
+    "school_management_postgres92.sql": "27aec6030b05a13313c581fbec9673b8565952f9222ff282a6123f550bbbf672",
+    "School Management Database - User Manual.pdf": "dbfb6fc4b1c2a13aa9f2eabf315d1853faee23b641174fc94a629c233f45316c"
+  },
+  "http_chat_regression": {
+    "verified_at": "2026-11-07T16:53:30.438683+00:00",
+    "passed": true,
+    "browser_checks": 7,
+    "context": "Actual insecure HTTP browser context with randomUUID unavailable",
+    "scope": "Production frontend image; API fixtures; no live provider calls",
+    "image": "school-insight-frontend:http-fix"
+  },
+  "sidebar_and_attendance_fix": {
+    "verified_at": "2026-11-07T17:09:19.868962+00:00",
+    "automated_tests_passed": 117,
+    "browser_checks_passed": 15,
+    "browser_scope": "Production frontend over HTTP with API fixtures; navigation, refresh, delayed responses and conversation persistence",
+    "live_checks": [
+      {
+        "question": "What is my attendance percentage?",
+        "passed": true
+      },
+      {
+        "question": "Show my marks by subject",
+        "passed": true
+      },
+      {
+        "question": "Show my attendance by subject",
+        "passed": true
+      }
+    ],
+    "provider": "gemini",
+    "model": "gemini-2.5-flash",
+    "deployed_to_aws": false
+  }
+}

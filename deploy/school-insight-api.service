@@ -1,0 +1,15 @@
+[Unit]
+Description=School Insight FastAPI
+After=network-online.target
+[Service]
+Type=simple
+User=jony
+WorkingDirectory=/home/jony/Documents/chat
+ExecStart=/home/jony/miniconda3/bin/python -m uvicorn product.api:app --host 127.0.0.1 --port 8100 --no-access-log
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

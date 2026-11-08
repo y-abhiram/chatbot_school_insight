@@ -1,0 +1,206 @@
+{
+  "run_id": "dff79bcd-a244-49e2-869d-a8dd611ae97b",
+  "provider": "gemini",
+  "model": "gemini-2.5-flash",
+  "method": "Live model and independently executed source SQL; page/concept/citation checks",
+  "cases": [
+    {
+      "id": 15,
+      "question": "How are progress reports generated?",
+      "expected": null,
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "citations_present": true,
+        "retrieval_relevance": true,
+        "citation_integrity": true,
+        "required_concepts": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "rag",
+        "answer": "As an Admin, you generate progress reports for an exam after all marks have been entered [p. 24, p. 12]. The process involves several steps: first, the system calculates each student's total obtained marks, total maximum marks, and overall percentage for the exam [p. 12]. Next, a grade is assigned to each report based on the student's percentage and the defined grade scale [p. 12]. Subsequently, students are assigned a class rank based on their performance percentage [p. 12]. Finally, the progress reports are published, and subject-wise breakdowns are inserted into `progress_report_items` for students to view [p. 12].",
+        "report": null,
+        "documentation": {
+          "answer": "As an Admin, you generate progress reports for an exam after all marks have been entered [p. 24, p. 12]. The process involves several steps: first, the system calculates each student's total obtained marks, total maximum marks, and overall percentage for the exam [p. 12]. Next, a grade is assigned to each report based on the student's percentage and the defined grade scale [p. 12]. Subsequently, students are assigned a class rank based on their performance percentage [p. 12]. Finally, the progress reports are published, and subject-wise breakdowns are inserted into `progress_report_items` for students to view [p. 12].",
+          "citations": [
+            {
+              "id": "c882b533-76c6-45e8-9819-9ad0b5533830",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 12,
+              "section": "7. Faculty Guide",
+              "excerpt": "Generate reports for a new exam once all marks are entered (replace 2 with the exam_id\nand 1 with the admin user_id):\nINSERT INTO progress_reports (student_id, exam_id, total_max_marks, \ntotal_obtained, percentage, generated_by)\nSELECT m.student_id, es.exam_id, SUM(es.max_marks), SUM(m.marks_obtained),\n       ROUND(100 * SUM(m.marks_obtained) / SUM(es.max_marks), 2), 1\nFROM marks m JOIN exam_schedules es ON es.exam_schedule_id = \nm.exam_schedule_id\nWHERE es.exam_id = 2\nGROUP BY m.student_id, es.exam_id;\nUPDATE progress_reports pr\nSET grade_id = (SELECT g.grade_id FROM grade_scale g WHERE pr.percentage \nBETWEEN g.min_percent AND g.max_percent)\nWHERE pr.exam_id = 2;\nUPDATE progress_reports pr SET class_rank = r.rk\nFROM (SELECT report_id, RANK() OVER (ORDER BY percentage DESC) AS rk\n      FROM progress_reports WHERE exam_id = 2) r\nWHERE pr.report_id = r.report_id;\nUPDATE progress_reports SET is_published = TRUE WHERE exam_id = 2;\nAlso insert the subject lines into progress_report_items  (one row per subject per\nreport) so students can see the subject-wise breakdown.\n7. Faculty Guide\nReplace 1  with your own faculty_id  (see Section 4).\n7.1 My assigned courses and classrooms\nSELECT c.class_name, sec.section_name, sub.subject_name, cr.room_name, \nca.periods_per_week\nFROM course_assignments ca\nJOIN sections sec ON sec.section_id = ca.section_id"
+            },
+            {
+              "id": "e2340abc-ae5f-466e-87a2-eaa191bbdb5d",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 24,
+              "section": "12.2 Find students without a profile or users without a role profile",
+              "excerpt": "12.2 Find students without a profile or users without a role profile\nSELECT u.user_id, u.username FROM users u\nWHERE u.role_id = 3 AND NOT EXISTS (SELECT 1 FROM students s WHERE s.user_id \n= u.user_id);\n13. Quick Reference\nI want to... Who Use\nAdd a user Admin Section 6.1\nAssign a teacher to a\nsubject\nAdmin Section 6.3\nCreate the timetable Admin Section 6.4\nSee attendance reports Admin v_student_attendance_report , Section\n6.4a\nApprove leave Admin v_pending_leaves , Section 6.5\nSchedule an exam Admin Section 6.6\nGenerate progress reports Admin Section 6.8\nSee my classes and rooms Faculty Sections 7.1 and 7.2\nMark attendance Faculty Section 7.3\nGive homework or\nassignments\nFaculty Sections 7.5 and 7.6\nEnter marks Faculty Section 7.7\nSee my timetable Faculty,\nStudent\nSections 7.2 and 8.3\nCheck my attendance Student Section 8.4\nSee homework and marks Student Sections 8.5 and 8.6\nSee my progress report Student Section 8.6a\nPage 24 of 24"
+            }
+          ]
+        },
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": []
+        },
+        "provider": "gemini",
+        "model": "gemini-2.5-flash",
+        "duration_ms": 20915,
+        "access_scope": "Admin",
+        "source": "RAG",
+        "read_only": true
+      },
+      "duration_ms": 20919
+    },
+    {
+      "id": 17,
+      "question": "Explain the result of the students with low attendance using the manual.",
+      "expected": [
+        {
+          "student_name": "Meera Iyer",
+          "attendance_pct": 0.0
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true,
+        "citations_present": true,
+        "retrieval_relevance": true,
+        "citation_integrity": true,
+        "required_concepts": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "hybrid",
+        "answer": "Meera Iyer\u2019s attendance is 0%.\nPresent and Late count as attended. This uses recorded periods, not an assumed full school year.",
+        "report": {
+          "sql": "SELECT \"v_student_attendance_report\".\"student_name\" AS \"student_name\", \"v_student_attendance_report\".\"attendance_pct\" AS \"attendance_pct\" FROM \"insight\".\"v_student_attendance_report\" AS \"v_student_attendance_report\" WHERE \"v_student_attendance_report\".\"attendance_pct\" < 75.0 LIMIT 201",
+          "columns": [
+            "student_name",
+            "attendance_pct"
+          ],
+          "rows": [
+            {
+              "student_name": "Meera Iyer",
+              "attendance_pct": 0.0
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": {
+          "answer": "The school's system identifies students with attendance percentages below 75% using the `v_student_attendance_report` view [p. 10, p. 19]. As an Admin, you can query this view to see total periods, attended periods, and the attendance percentage for each student, ordered by lowest percentage first [p. 9, p. 19]. However, the provided documentation does not specify the school's policies or guidelines regarding actions to be taken for low student attendance once identified.",
+          "citations": [
+            {
+              "id": "736edb2e-b7b0-4292-8fdb-c93db821eeb3",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 10,
+              "section": "6.5 Leave approvals",
+              "excerpt": "Students below 75 percent:\nSELECT * FROM v_student_attendance_report WHERE attendance_pct < 75;\nAttendance for one section on one date:\nSELECT u.first_name, u.last_name, p.period_no, sub.subject_name, sa.status\nFROM student_attendance sa\nJOIN students s ON s.student_id = sa.student_id\nJOIN users u ON u.user_id = s.user_id\nJOIN periods p ON p.period_id = sa.period_id\nJOIN subjects sub ON sub.subject_id = sa.subject_id\nWHERE s.section_id = 2 AND sa.attendance_date = '2026-11-02'\nORDER BY u.first_name, p.period_no;\nFaculty attendance summary:\nSELECT f.employee_no, u.first_name, u.last_name, fa.status, COUNT(*) AS days\nFROM faculty_attendance fa\nJOIN faculty f ON f.faculty_id = fa.faculty_id\nJOIN users u ON u.user_id = f.user_id\nGROUP BY f.employee_no, u.first_name, u.last_name, fa.status\nORDER BY f.employee_no;\n6.5 Leave approvals\nSee pending requests from students and faculty:\nSELECT * FROM v_pending_leaves;\nApprove or reject (the admin user_id goes in reviewed_by ):\nUPDATE leave_requests\nSET status = 'Approved', reviewed_by = 1, reviewed_on = NOW(), admin_remarks \n= 'Approved. Get well soon.'\nWHERE leave_id = 2;\nUse status Rejected  and a remark to reject a request.\nPage 10 of 24"
+            },
+            {
+              "id": "df8edbb0-cc24-4dd2-93a3-b721e715ee9d",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 19,
+              "section": "9. Built-in Reports (Views)",
+              "excerpt": "9. Built-in Reports (Views)\nViews always show current data. Query them like tables, for example SELECT * FROM\nv_exam_report WHERE result = 'Fail'; .\n10. Data Rules and Constraints\nThe database enforces these rules automatically. An invalid change is rejected with an\nerror message.\nView Shows Typical user\nv_student_attendance_report Total periods, attended periods and\nattendance percentage per student\nAdmin\nv_exam_report Exam, student, subject, marks, pass or\nfail, grade\nAdmin,\nFaculty\nv_pending_leaves Leave requests waiting for approval Admin\nv_timetable Weekly timetable with section, period\ntimes, subject, teacher and room\nEveryone\nRule Where it applies\nUsernames and emails are unique users\nOne profile per user admins , faculty , students  ( user_id  is\nunique)\nAdmission and employee numbers are\nunique\nstudents.admission_no ,\nfaculty.employee_no\nNo timetable clashes timetable : one class per section, teacher\nand room per day and period\nOne course assignment per subject per\nsection per year\ncourse_assignments\nOne attendance record per student, date\nand period\nstudent_attendance\nPage 19 of 24"
+            },
+            {
+              "id": "887e95b4-5644-4108-91b5-a76bd50c026a",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 9,
+              "section": "6.2 Set up classes, subjects, rooms and sections",
+              "excerpt": "6.2 Set up classes, subjects, rooms and sections\nINSERT INTO classes (class_name) VALUES ('Grade 8');\nINSERT INTO subjects (subject_code, subject_name) VALUES ('SOC', 'Social \nStudies');\nINSERT INTO classrooms (room_name, room_type, capacity) VALUES ('Room 103', \n'Classroom', 40);\nINSERT INTO sections (class_id, academic_year_id, section_name, \nclass_teacher_id) VALUES (1, 1, 'B', 3);\n6.3 Assign a faculty member to a subject, section and classroom\nINSERT INTO course_assignments (academic_year_id, section_id, subject_id, \nfaculty_id, classroom_id, periods_per_week)\nVALUES (1, 2, 3, 3, 2, 5);\n6.4 Build the timetable\nInsert one row per period. The database blocks clashes automatically: a section, a teacher\nor a room cannot be used twice in the same period on the same day.\nINSERT INTO timetable (section_id, day_of_week, period_id, subject_id, \nfaculty_id, classroom_id)\nVALUES (2, 'Tuesday', 1, 1, 1, 2);\nView the timetable of one section:\nSELECT day_of_week, period_no, start_time, subject_name, faculty_name, \nroom_name\nFROM v_timetable\nWHERE section = 'Grade 10-A'\nORDER BY CASE day_of_week WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN \n'Wednesday' THEN 3\n  WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 ELSE 6 END, period_no;\n6.4a Attendance reports\nStudent attendance percentage for everyone, lowest first:\nSELECT * FROM v_student_attendance_report ORDER BY attendance_pct;\nPage 9 of 24"
+            }
+          ]
+        },
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "attendance_pct"
+          ],
+          "labels": [
+            "student_name"
+          ]
+        },
+        "provider": "gemini",
+        "model": "gemini-2.5-flash",
+        "duration_ms": 9814,
+        "access_scope": "Admin",
+        "source": "HYBRID",
+        "read_only": true
+      },
+      "duration_ms": 9817
+    },
+    {
+      "id": 5,
+      "question": "Who has the lowest attendance?",
+      "expected": [
+        {
+          "student_name": "Meera Iyer",
+          "attendance_pct": 0.0
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Meera Iyer\u2019s attendance is 0%.\nPresent and Late count as attended. This uses recorded periods, not an assumed full school year.\nOnly the first 1 rows are shown. Narrow your filters before drawing conclusions about the full dataset.",
+        "report": {
+          "sql": "SELECT \"v_student_attendance_report\".\"student_name\" AS \"student_name\", \"v_student_attendance_report\".\"attendance_pct\" AS \"attendance_pct\" FROM \"insight\".\"v_student_attendance_report\" AS \"v_student_attendance_report\" ORDER BY \"attendance_pct\" ASC LIMIT 2",
+          "columns": [
+            "student_name",
+            "attendance_pct"
+          ],
+          "rows": [
+            {
+              "student_name": "Meera Iyer",
+              "attendance_pct": 0.0
+            }
+          ],
+          "truncated": true,
+          "limit": 1,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "attendance_pct"
+          ],
+          "labels": [
+            "student_name"
+          ]
+        },
+        "provider": "gemini",
+        "model": "gemini-2.5-flash",
+        "duration_ms": 4417,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 4422
+    }
+  ],
+  "passed": 3,
+  "total": 3,
+  "requested_case_ids": [
+    5,
+    15,
+    17
+  ],
+  "complete": true
+}

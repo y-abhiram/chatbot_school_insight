@@ -1,0 +1,921 @@
+{
+  "run_id": "a066b813-e5b1-4b03-a832-d6d9d0af34dd",
+  "provider": "openai",
+  "model": "gpt-5.4-mini",
+  "method": "Live model and independently executed source SQL; page/concept/citation checks",
+  "cases": [
+    {
+      "id": 1,
+      "question": "How many students are there?",
+      "expected": [
+        {
+          "total": 4
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "There are 4 student records visible to your account under the requested filters.",
+        "report": {
+          "sql": "SELECT COUNT(*) AS \"student_count\" FROM \"insight\".\"students\" AS \"students\" LIMIT 201",
+          "columns": [
+            "student_count"
+          ],
+          "rows": [
+            {
+              "student_count": 4
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "student_count"
+          ],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 5293,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 5300
+    },
+    {
+      "id": 2,
+      "question": "How many users are registered?",
+      "expected": [
+        {
+          "total": 8
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "There are 8 matching records visible to your account under the requested filters.",
+        "report": {
+          "sql": "SELECT COUNT(*) AS \"user_count\" FROM \"insight\".\"users\" AS \"users\" LIMIT 201",
+          "columns": [
+            "user_count"
+          ],
+          "rows": [
+            {
+              "user_count": 8
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "user_count"
+          ],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 4126,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 4127
+    },
+    {
+      "id": 3,
+      "question": "How many faculty members are there?",
+      "expected": [
+        {
+          "total": 3
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "There are 3 faculty records visible to your account under the requested filters.",
+        "report": {
+          "sql": "SELECT COUNT(*) AS \"faculty_count\" FROM \"insight\".\"faculty\" AS \"faculty\" LIMIT 201",
+          "columns": [
+            "faculty_count"
+          ],
+          "rows": [
+            {
+              "faculty_count": 3
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "faculty_count"
+          ],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 2730,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 2731
+    },
+    {
+      "id": 4,
+      "question": "List all students and their sections.",
+      "expected": [
+        {
+          "student_name": "Meera Iyer",
+          "class_name": "Grade 9",
+          "section_name": "A"
+        },
+        {
+          "student_name": "Arjun Rao",
+          "class_name": "Grade 9",
+          "section_name": "A"
+        },
+        {
+          "student_name": "Divya Nair",
+          "class_name": "Grade 10",
+          "section_name": "A"
+        },
+        {
+          "student_name": "Kiran Patel",
+          "class_name": "Grade 10",
+          "section_name": "A"
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here is what I found in your permitted records:\nStudent name: Divya Nair \u00b7 Class name: Grade 10 \u00b7 Section name: A\nStudent name: Kiran Patel \u00b7 Class name: Grade 10 \u00b7 Section name: A\nStudent name: Arjun Rao \u00b7 Class name: Grade 9 \u00b7 Section name: A\nStudent name: Meera Iyer \u00b7 Class name: Grade 9 \u00b7 Section name: A",
+        "report": {
+          "sql": "SELECT \"s\".\"student_name\" AS \"student_name\", \"s\".\"class_name\" AS \"class_name\", \"s\".\"section_name\" AS \"section_name\" FROM \"insight\".\"students\" AS \"s\" ORDER BY \"s\".\"class_name\", \"s\".\"section_name\", \"s\".\"student_name\" LIMIT 201",
+          "columns": [
+            "student_name",
+            "class_name",
+            "section_name"
+          ],
+          "rows": [
+            {
+              "student_name": "Divya Nair",
+              "class_name": "Grade 10",
+              "section_name": "A"
+            },
+            {
+              "student_name": "Kiran Patel",
+              "class_name": "Grade 10",
+              "section_name": "A"
+            },
+            {
+              "student_name": "Arjun Rao",
+              "class_name": "Grade 9",
+              "section_name": "A"
+            },
+            {
+              "student_name": "Meera Iyer",
+              "class_name": "Grade 9",
+              "section_name": "A"
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": [
+            "student_name",
+            "class_name",
+            "section_name"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 3019,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 3020
+    },
+    {
+      "id": 6,
+      "question": "Show students below 75% attendance.",
+      "expected": [
+        {
+          "student_name": "Meera Iyer",
+          "attendance_pct": 0.0
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Meera Iyer\u2019s attendance is 0% (0 of 2 recorded periods attended).\nPresent and Late count as attended. This uses recorded periods, not an assumed full school year.",
+        "report": {
+          "sql": "SELECT \"v_student_attendance_report\".\"student_id\" AS \"student_id\", \"v_student_attendance_report\".\"student_name\" AS \"student_name\", \"v_student_attendance_report\".\"class_name\" AS \"class_name\", \"v_student_attendance_report\".\"section_name\" AS \"section_name\", \"v_student_attendance_report\".\"total_periods\" AS \"total_periods\", \"v_student_attendance_report\".\"attended\" AS \"attended\", \"v_student_attendance_report\".\"attendance_pct\" AS \"attendance_pct\" FROM \"insight\".\"v_student_attendance_report\" AS \"v_student_attendance_report\" WHERE \"v_student_attendance_report\".\"attendance_pct\" < 75 ORDER BY \"attendance_pct\" ASC, \"student_name\" ASC LIMIT 201",
+          "columns": [
+            "student_id",
+            "student_name",
+            "class_name",
+            "section_name",
+            "total_periods",
+            "attended",
+            "attendance_pct"
+          ],
+          "rows": [
+            {
+              "student_id": 2,
+              "student_name": "Meera Iyer",
+              "class_name": "Grade 9",
+              "section_name": "A",
+              "total_periods": 2,
+              "attended": 0,
+              "attendance_pct": 0.0
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "student_id",
+            "total_periods",
+            "attended",
+            "attendance_pct"
+          ],
+          "labels": [
+            "student_name",
+            "class_name",
+            "section_name"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 3688,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 3689
+    },
+    {
+      "id": 7,
+      "question": "Show pending leave requests.",
+      "expected": [
+        {
+          "applicant": "Meera Iyer",
+          "type_name": "Sick Leave",
+          "from_date": "2026-11-02",
+          "to_date": "2026-11-04"
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here is what I found in your permitted records:\nApplicant: Meera Iyer \u00b7 Type name: Sick Leave \u00b7 From date: 2026-11-02 \u00b7 To date: 2026-11-04",
+        "report": {
+          "sql": "SELECT \"v_pending_leaves\".\"applicant\" AS \"applicant\", \"v_pending_leaves\".\"type_name\" AS \"type_name\", \"v_pending_leaves\".\"from_date\" AS \"from_date\", \"v_pending_leaves\".\"to_date\" AS \"to_date\" FROM \"insight\".\"v_pending_leaves\" AS \"v_pending_leaves\" WHERE \"v_pending_leaves\".\"status\" = 'Pending' ORDER BY \"from_date\" ASC, \"v_pending_leaves\".\"leave_id\" ASC LIMIT 201",
+          "columns": [
+            "applicant",
+            "type_name",
+            "from_date",
+            "to_date"
+          ],
+          "rows": [
+            {
+              "applicant": "Meera Iyer",
+              "type_name": "Sick Leave",
+              "from_date": "2026-11-02",
+              "to_date": "2026-11-04"
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": [
+            "applicant",
+            "type_name",
+            "from_date",
+            "to_date"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 4186,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 16382
+    },
+    {
+      "id": 8,
+      "question": "Show the timetable for Grade 9-A.",
+      "expected": [
+        {
+          "day_of_week": "Monday",
+          "period_no": 1,
+          "subject_name": "Mathematics"
+        },
+        {
+          "day_of_week": "Monday",
+          "period_no": 2,
+          "subject_name": "Science"
+        },
+        {
+          "day_of_week": "Monday",
+          "period_no": 3,
+          "subject_name": "English"
+        },
+        {
+          "day_of_week": "Tuesday",
+          "period_no": 1,
+          "subject_name": "Science"
+        },
+        {
+          "day_of_week": "Tuesday",
+          "period_no": 2,
+          "subject_name": "English"
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here is what I found in your permitted records:\nDay of week: Monday \u00b7 Period no: 1 \u00b7 Subject name: Mathematics\nDay of week: Monday \u00b7 Period no: 2 \u00b7 Subject name: Science\nDay of week: Monday \u00b7 Period no: 3 \u00b7 Subject name: English\nDay of week: Tuesday \u00b7 Period no: 1 \u00b7 Subject name: Science\nDay of week: Tuesday \u00b7 Period no: 2 \u00b7 Subject name: English",
+        "report": {
+          "sql": "SELECT \"v_timetable\".\"day_of_week\" AS \"day_of_week\", \"v_timetable\".\"period_no\" AS \"period_no\", \"v_timetable\".\"subject_name\" AS \"subject_name\" FROM \"insight\".\"v_timetable\" AS \"v_timetable\" WHERE \"v_timetable\".\"section\" = 'Grade 9-A' ORDER BY \"day_of_week\", \"period_no\" LIMIT 201",
+          "columns": [
+            "day_of_week",
+            "period_no",
+            "subject_name"
+          ],
+          "rows": [
+            {
+              "day_of_week": "Monday",
+              "period_no": 1,
+              "subject_name": "Mathematics"
+            },
+            {
+              "day_of_week": "Monday",
+              "period_no": 2,
+              "subject_name": "Science"
+            },
+            {
+              "day_of_week": "Monday",
+              "period_no": 3,
+              "subject_name": "English"
+            },
+            {
+              "day_of_week": "Tuesday",
+              "period_no": 1,
+              "subject_name": "Science"
+            },
+            {
+              "day_of_week": "Tuesday",
+              "period_no": 2,
+              "subject_name": "English"
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "period_no"
+          ],
+          "labels": [
+            "day_of_week",
+            "subject_name"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 3431,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 16629
+    },
+    {
+      "id": 9,
+      "question": "Show Arjun's attendance.",
+      "expected": [
+        {
+          "student_name": "Arjun Rao",
+          "attendance_pct": 100.0,
+          "total_periods": 2,
+          "attended": 2
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Arjun Rao\u2019s attendance is 100% (2 of 2 recorded periods attended).\nPresent and Late count as attended. This uses recorded periods, not an assumed full school year.",
+        "report": {
+          "sql": "SELECT \"v_student_attendance_report\".\"student_name\" AS \"student_name\", \"v_student_attendance_report\".\"attendance_pct\" AS \"attendance_pct\", \"v_student_attendance_report\".\"total_periods\" AS \"total_periods\", \"v_student_attendance_report\".\"attended\" AS \"attended\" FROM \"insight\".\"v_student_attendance_report\" AS \"v_student_attendance_report\" WHERE \"v_student_attendance_report\".\"student_name\" ILIKE 'Arjun%' ORDER BY \"student_name\" LIMIT 201",
+          "columns": [
+            "student_name",
+            "attendance_pct",
+            "total_periods",
+            "attended"
+          ],
+          "rows": [
+            {
+              "student_name": "Arjun Rao",
+              "attendance_pct": 100.0,
+              "total_periods": 2,
+              "attended": 2
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "attendance_pct",
+            "total_periods",
+            "attended"
+          ],
+          "labels": [
+            "student_name"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 2740,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 13530
+    },
+    {
+      "id": 10,
+      "question": "Show Kiran's examination results.",
+      "expected": [
+        {
+          "student_name": "Kiran Patel",
+          "subject_name": "Mathematics",
+          "marks_obtained": 88.0,
+          "grade": "A"
+        },
+        {
+          "student_name": "Kiran Patel",
+          "subject_name": "Science",
+          "marks_obtained": 76.0,
+          "grade": "B+"
+        },
+        {
+          "student_name": "Kiran Patel",
+          "subject_name": "English",
+          "marks_obtained": 82.0,
+          "grade": "A"
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here are the matching recorded exam results:\nKiran Patel \u00b7 English: 82 \u00b7 Grade A\nKiran Patel \u00b7 Mathematics: 88 \u00b7 Grade A\nKiran Patel \u00b7 Science: 76 \u00b7 Grade B+",
+        "report": {
+          "sql": "SELECT \"v_exam_report\".\"student_name\" AS \"student_name\", \"v_exam_report\".\"subject_name\" AS \"subject_name\", \"v_exam_report\".\"marks_obtained\" AS \"marks_obtained\", \"v_exam_report\".\"grade\" AS \"grade\" FROM \"insight\".\"v_exam_report\" AS \"v_exam_report\" WHERE \"v_exam_report\".\"student_name\" ILIKE 'Kiran%' ORDER BY \"subject_name\", \"v_exam_report\".\"exam_name\" LIMIT 201",
+          "columns": [
+            "student_name",
+            "subject_name",
+            "marks_obtained",
+            "grade"
+          ],
+          "rows": [
+            {
+              "student_name": "Kiran Patel",
+              "subject_name": "English",
+              "marks_obtained": 82.0,
+              "grade": "A"
+            },
+            {
+              "student_name": "Kiran Patel",
+              "subject_name": "Mathematics",
+              "marks_obtained": 88.0,
+              "grade": "A"
+            },
+            {
+              "student_name": "Kiran Patel",
+              "subject_name": "Science",
+              "marks_obtained": 76.0,
+              "grade": "B+"
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "marks_obtained"
+          ],
+          "labels": [
+            "student_name",
+            "subject_name",
+            "grade"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 3965,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 15865
+    },
+    {
+      "id": 11,
+      "question": "How many students passed and failed Mathematics?",
+      "expected": [
+        {
+          "passed": 2,
+          "failed": 0
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here are the matching recorded exam results:\npassed: 2 \u00b7 failed: 0",
+        "report": {
+          "sql": "SELECT COUNT(*) FILTER(WHERE \"v_exam_report\".\"result\" = 'Pass') AS \"passed\", COUNT(*) FILTER(WHERE \"v_exam_report\".\"result\" = 'Fail') AS \"failed\" FROM \"insight\".\"v_exam_report\" AS \"v_exam_report\" WHERE \"v_exam_report\".\"subject_name\" = 'Mathematics' LIMIT 201",
+          "columns": [
+            "passed",
+            "failed"
+          ],
+          "rows": [
+            {
+              "passed": 2,
+              "failed": 0
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "passed",
+            "failed"
+          ],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 3752,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 14728
+    },
+    {
+      "id": 12,
+      "question": "Which students have pending homework?",
+      "expected": [
+        {
+          "student_name": "Meera Iyer",
+          "title": "Algebra Worksheet 5"
+        },
+        {
+          "student_name": "Divya Nair",
+          "title": "Essay: My Role Model"
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Here is the recorded submission status:\nEssay: My Role Model \u00b7 Divya Nair\nAlgebra Worksheet 5 \u00b7 Meera Iyer",
+        "report": {
+          "sql": "SELECT \"hs\".\"student_name\" AS \"student_name\", \"hs\".\"title\" AS \"title\" FROM \"insight\".\"homework_submissions\" AS \"hs\" WHERE \"hs\".\"status\" = 'Pending' ORDER BY \"hs\".\"student_name\", \"hs\".\"title\" LIMIT 201",
+          "columns": [
+            "student_name",
+            "title"
+          ],
+          "rows": [
+            {
+              "student_name": "Divya Nair",
+              "title": "Essay: My Role Model"
+            },
+            {
+              "student_name": "Meera Iyer",
+              "title": "Algebra Worksheet 5"
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": [
+            "student_name",
+            "title"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 4732,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 17790
+    },
+    {
+      "id": 13,
+      "question": "Explain the leave approval process.",
+      "expected": null,
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "citations_present": true,
+        "retrieval_relevance": true,
+        "citation_integrity": true,
+        "required_concepts": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "rag",
+        "answer": "As Admin, you can review pending leave requests for both students and faculty in the built-in view `v_pending_leaves`, which shows requests waiting for approval [p. 10, p. 19]. The manual says to approve or reject by updating the `leave_requests` record: set `status` to `Approved` or `Rejected`, record your admin user in `reviewed_by`, and store the review time in `reviewed_on`; add admin remarks when approving or rejecting [p. 10].",
+        "report": null,
+        "documentation": {
+          "answer": "As Admin, you can review pending leave requests for both students and faculty in the built-in view `v_pending_leaves`, which shows requests waiting for approval [p. 10, p. 19]. The manual says to approve or reject by updating the `leave_requests` record: set `status` to `Approved` or `Rejected`, record your admin user in `reviewed_by`, and store the review time in `reviewed_on`; add admin remarks when approving or rejecting [p. 10].",
+          "citations": [
+            {
+              "id": "736edb2e-b7b0-4292-8fdb-c93db821eeb3",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 10,
+              "section": "6.5 Leave approvals",
+              "excerpt": "Students below 75 percent:\nSELECT * FROM v_student_attendance_report WHERE attendance_pct < 75;\nAttendance for one section on one date:\nSELECT u.first_name, u.last_name, p.period_no, sub.subject_name, sa.status\nFROM student_attendance sa\nJOIN students s ON s.student_id = sa.student_id\nJOIN users u ON u.user_id = s.user_id\nJOIN periods p ON p.period_id = sa.period_id\nJOIN subjects sub ON sub.subject_id = sa.subject_id\nWHERE s.section_id = 2 AND sa.attendance_date = '2026-11-02'\nORDER BY u.first_name, p.period_no;\nFaculty attendance summary:\nSELECT f.employee_no, u.first_name, u.last_name, fa.status, COUNT(*) AS days\nFROM faculty_attendance fa\nJOIN faculty f ON f.faculty_id = fa.faculty_id\nJOIN users u ON u.user_id = f.user_id\nGROUP BY f.employee_no, u.first_name, u.last_name, fa.status\nORDER BY f.employee_no;\n6.5 Leave approvals\nSee pending requests from students and faculty:\nSELECT * FROM v_pending_leaves;\nApprove or reject (the admin user_id goes in reviewed_by ):\nUPDATE leave_requests\nSET status = 'Approved', reviewed_by = 1, reviewed_on = NOW(), admin_remarks \n= 'Approved. Get well soon.'\nWHERE leave_id = 2;\nUse status Rejected  and a remark to reject a request.\nPage 10 of 24"
+            },
+            {
+              "id": "df8edbb0-cc24-4dd2-93a3-b721e715ee9d",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 19,
+              "section": "9. Built-in Reports (Views)",
+              "excerpt": "9. Built-in Reports (Views)\nViews always show current data. Query them like tables, for example SELECT * FROM\nv_exam_report WHERE result = 'Fail'; .\n10. Data Rules and Constraints\nThe database enforces these rules automatically. An invalid change is rejected with an\nerror message.\nView Shows Typical user\nv_student_attendance_report Total periods, attended periods and\nattendance percentage per student\nAdmin\nv_exam_report Exam, student, subject, marks, pass or\nfail, grade\nAdmin,\nFaculty\nv_pending_leaves Leave requests waiting for approval Admin\nv_timetable Weekly timetable with section, period\ntimes, subject, teacher and room\nEveryone\nRule Where it applies\nUsernames and emails are unique users\nOne profile per user admins , faculty , students  ( user_id  is\nunique)\nAdmission and employee numbers are\nunique\nstudents.admission_no ,\nfaculty.employee_no\nNo timetable clashes timetable : one class per section, teacher\nand room per day and period\nOne course assignment per subject per\nsection per year\ncourse_assignments\nOne attendance record per student, date\nand period\nstudent_attendance\nPage 19 of 24"
+            }
+          ]
+        },
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 16006,
+        "access_scope": "Admin",
+        "source": "RAG",
+        "read_only": true
+      },
+      "duration_ms": 16009
+    },
+    {
+      "id": 14,
+      "question": "What are the allowed student attendance statuses?",
+      "expected": null,
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "citations_present": true,
+        "retrieval_relevance": true,
+        "citation_integrity": true,
+        "required_concepts": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "rag",
+        "answer": "The manual lists the allowed student attendance statuses as Present, Absent, Late, and Excused. Student attendance is recorded as one row per student, date, and period [p. 13]. The database also enforces valid status values automatically [p. 19].",
+        "report": null,
+        "documentation": {
+          "answer": "The manual lists the allowed student attendance statuses as Present, Absent, Late, and Excused. Student attendance is recorded as one row per student, date, and period [p. 13]. The database also enforces valid status values automatically [p. 19].",
+          "citations": [
+            {
+              "id": "82e578a0-d323-413c-a265-bb3ec0cda60c",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 13,
+              "section": "7.2 My timetable",
+              "excerpt": "7.2 My timetable\nSELECT t.day_of_week, p.period_no, p.start_time, p.end_time, c.class_name, \nsec.section_name, sub.subject_name, cr.room_name\nFROM timetable t\nJOIN periods p ON p.period_id = t.period_id\nJOIN sections sec ON sec.section_id = t.section_id\nJOIN classes c ON c.class_id = sec.class_id\nJOIN subjects sub ON sub.subject_id = t.subject_id\nJOIN classrooms cr ON cr.classroom_id = t.classroom_id\nWHERE t.faculty_id = 1\nORDER BY CASE t.day_of_week WHEN 'Monday' THEN 1 WHEN 'Tuesday' THEN 2 WHEN \n'Wednesday' THEN 3\n  WHEN 'Thursday' THEN 4 WHEN 'Friday' THEN 5 ELSE 6 END, p.period_no;\n7.3 Mark student attendance\nStatus values: Present , Absent , Late , Excused . One row per student, date and period.\nINSERT INTO student_attendance (student_id, attendance_date, period_id, \nsubject_id, status, marked_by, remarks)\nVALUES (1, '2026-11-03', 1, 1, 'Present', 1, NULL),\n       (2, '2026-11-03', 1, 1, 'Absent', 1, 'Fever');\nTo correct a mistake:\nUPDATE student_attendance SET status = 'Late'\nWHERE student_id = 2 AND attendance_date = '2026-11-03' AND period_id = 1;\n7.4 My own attendance\nINSERT INTO faculty_attendance (faculty_id, attendance_date, check_in, \nstatus)\nVALUES (1, '2026-11-03', '08:20', 'Present');\nUPDATE faculty_attendance SET check_out = '16:00'\nWHERE faculty_id = 1 AND attendance_date = '2026-11-03';\nPage 13 of 24"
+            },
+            {
+              "id": "df8edbb0-cc24-4dd2-93a3-b721e715ee9d",
+              "document_id": "9c91c6fc-9abd-4e88-a974-a4ad65a832c1",
+              "name": "School Management Database - User Manual.pdf",
+              "page": 19,
+              "section": "9. Built-in Reports (Views)",
+              "excerpt": "9. Built-in Reports (Views)\nViews always show current data. Query them like tables, for example SELECT * FROM\nv_exam_report WHERE result = 'Fail'; .\n10. Data Rules and Constraints\nThe database enforces these rules automatically. An invalid change is rejected with an\nerror message.\nView Shows Typical user\nv_student_attendance_report Total periods, attended periods and\nattendance percentage per student\nAdmin\nv_exam_report Exam, student, subject, marks, pass or\nfail, grade\nAdmin,\nFaculty\nv_pending_leaves Leave requests waiting for approval Admin\nv_timetable Weekly timetable with section, period\ntimes, subject, teacher and room\nEveryone\nRule Where it applies\nUsernames and emails are unique users\nOne profile per user admins , faculty , students  ( user_id  is\nunique)\nAdmission and employee numbers are\nunique\nstudents.admission_no ,\nfaculty.employee_no\nNo timetable clashes timetable : one class per section, teacher\nand room per day and period\nOne course assignment per subject per\nsection per year\ncourse_assignments\nOne attendance record per student, date\nand period\nstudent_attendance\nPage 19 of 24"
+            }
+          ]
+        },
+        "visualization": {
+          "available": false,
+          "metrics": [],
+          "labels": []
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 4284,
+        "access_scope": "Admin",
+        "source": "RAG",
+        "read_only": true
+      },
+      "duration_ms": 4286
+    },
+    {
+      "id": 16,
+      "question": "Compare attendance between the two sections.",
+      "expected": [
+        {
+          "class_name": "Grade 9",
+          "section_name": "A",
+          "attendance_pct": 50.0
+        },
+        {
+          "class_name": "Grade 10",
+          "section_name": "A",
+          "attendance_pct": 100.0
+        }
+      ],
+      "checks": {
+        "intent": true,
+        "nonempty_answer": true,
+        "sql_result": true
+      },
+      "passed": true,
+      "response": {
+        "kind": "sql",
+        "answer": "Recorded\u2019s attendance is 100%.\nRecorded\u2019s attendance is 50%.\nPresent and Late count as attended. This uses recorded periods, not an assumed full school year.",
+        "report": {
+          "sql": "SELECT \"v_student_attendance_report\".\"class_name\" AS \"class_name\", \"v_student_attendance_report\".\"section_name\" AS \"section_name\", ROUND(100.0 * SUM(\"v_student_attendance_report\".\"attended\") / NULLIF(SUM(\"v_student_attendance_report\".\"total_periods\"), 0), 2) AS \"attendance_pct\" FROM \"insight\".\"v_student_attendance_report\" AS \"v_student_attendance_report\" WHERE \"v_student_attendance_report\".\"section_name\" IN ('A') GROUP BY \"v_student_attendance_report\".\"class_name\", \"v_student_attendance_report\".\"section_name\" ORDER BY \"class_name\", \"section_name\" LIMIT 201",
+          "columns": [
+            "class_name",
+            "section_name",
+            "attendance_pct"
+          ],
+          "rows": [
+            {
+              "class_name": "Grade 10",
+              "section_name": "A",
+              "attendance_pct": 100.0
+            },
+            {
+              "class_name": "Grade 9",
+              "section_name": "A",
+              "attendance_pct": 50.0
+            }
+          ],
+          "truncated": false,
+          "limit": 200,
+          "cached": false
+        },
+        "documentation": null,
+        "visualization": {
+          "available": true,
+          "metrics": [
+            "attendance_pct"
+          ],
+          "labels": [
+            "class_name",
+            "section_name"
+          ]
+        },
+        "provider": "openai",
+        "model": "gpt-5.4-mini",
+        "duration_ms": 4654,
+        "access_scope": "Admin",
+        "source": "SQL",
+        "read_only": true
+      },
+      "duration_ms": 17269
+    },
+    {
+      "id": 5,
+      "question": "Who has the lowest attendance?",
+      "passed": false,
+      "error_type": "APIError",
+      "duration_ms": 40327
+    }
+  ],
+  "passed": 14,
+  "total": 15,
+  "requested_case_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "complete": false
+}

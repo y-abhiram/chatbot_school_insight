@@ -1,0 +1,9 @@
+export type Row=Record<string,string|number|boolean|null>;
+export type Identity={id:number;tenant_id:string;username:string;role_name:'Admin'|'Faculty'|'Student';name:string};
+export type Provider={id:string;name:string;configured:boolean;models:string[]};
+export type Settings={providers:Provider[];default_provider:string;default_model:string;read_only:boolean;tenant:string;embedding:string;reranker:string;tracing:boolean};
+export type Report={sql:string;columns:string[];rows:Row[];truncated:boolean;limit:number;cached:boolean};
+export type Citation={id:string;document_id:string;name:string;page:number;section:string;excerpt:string};
+export type Answer={message_id?:string;conversation_id?:string;source:string;kind:string;answer:string;report?:Report;documentation?:{answer:string;citations:Citation[]};provider:string;model:string;duration_ms:number;access_scope:string};
+export type Message={id:string;role:'user'|'assistant';content:string;payload?:Answer;pending?:boolean;error?:string;stage?:string;streaming_documentation?:string};
+export type Conversation={id:string;title:string;provider:string;model:string;created_at:string};

@@ -1,0 +1,168 @@
+name: school-insight-production
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-database-environment: &database-environment
+  PRODUCT_DATABASE_HOST: postgres
+  PRODUCT_DATABASE_PORT: "5432"
+  POSTGRES_DB: school_ai
+  PRODUCT_APP_PASSWORD_FILE: /run/secrets/app_password
+  PRODUCT_QUERY_PASSWORD_FILE: /run/secrets/query_password
+  PRODUCT_REDIS_URL: redis://redis:6379/0
+
+x-app-environment: &app-environment
+  <<: *database-environment
+  PRODUCT_WEB_ORIGINS: ${PRODUCT_WEB_ORIGINS:?Configure the exact public HTTPS origin}
+  COOKIE_SECURE: ${COOKIE_SECURE:-true}
+  AI_PROVIDER: ${AI_PROVIDER:-auto}
+  OPENAI_API_KEY_FILE: /run/secrets/openai_api_key
+  OPENAI_MODEL: ${OPENAI_MODEL:-}
+  OPENAI_MODELS: ${OPENAI_MODELS:-}
+  GEMINI_API_KEY_FILE: /run/secrets/gemini_api_key
+  GEMINI_MODEL: ${GEMINI_MODEL:-}
+  GEMINI_MODELS: ${GEMINI_MODELS:-}
+  GROQ_API_KEY_FILE: /run/secrets/groq_api_key
+  GROQ_MODEL: ${GROQ_MODEL:-}
+  GROQ_MODELS: ${GROQ_MODELS:-}
+  LANGSMITH_TRACING: "false"
+
+x-app-secrets: &app-secrets
+  - app_password
+  - query_password
+  - openai_api_key
+  - gemini_api_key
+  - groq_api_key
+
+x-app: &app
+  image: school-insight-backend:${IMAGE_TAG:-local}
+  build:
+    context: .
+    dockerfile: Dockerfile.backend
+  init: true
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ["/tmp:size=256m,mode=1777"]
+  security_opt: [no-new-privileges:true]
+  cap_drop: [ALL]
+  volumes: [app_runtime:/app/.runtime]
+  networks: [app, data]
+  logging: *logging
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: school_ai
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+    secrets: [postgres_password]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    networks: [data]
+    restart: unless-stopped
+    shm_size: 128mb
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d school_ai"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    logging: *logging
+
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --appendonly, "yes", --maxmemory, 128mb, --maxmemory-policy, noeviction]
+    volumes: [redis_data:/data]
+    networks: [data]
+    restart: unless-stopped
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    logging: *logging
+
+  bootstrap:
+    <<: *app
+    restart: "no"
+    command: [python, scripts/bootstrap_product.py, --if-needed]
+    environment:
+      <<: *database-environment
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets: [postgres_password, app_password, query_password]
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck: {disable: true}
+
+  backend:
+    <<: *app
+    environment: *app-environment
+    secrets: *app-secrets
+    depends_on:
+      bootstrap: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+
+  worker:
+    <<: *app
+    command: [python, -m, celery, -A, product.jobs.celery, worker, --loglevel=warning, --pool=solo, --concurrency=1, --hostname=worker@%h]
+    environment: *app-environment
+    secrets: *app-secrets
+    depends_on:
+      bootstrap: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD-SHELL, 'python -m celery -A product.jobs.celery inspect ping --destination "worker@$$HOSTNAME" --timeout 5 | grep -q pong']
+      interval: 60s
+      timeout: 15s
+      start_period: 60s
+      retries: 3
+
+  frontend:
+    image: school-insight-frontend:${IMAGE_TAG:-local}
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args: {API_INTERNAL_URL: "http://backend:8100"}
+    ports: ["127.0.0.1:${WEB_PORT:-3080}:3000"]
+    networks: [app]
+    depends_on:
+      backend: {condition: service_healthy}
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs: ["/tmp:size=64m,mode=1777"]
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    logging: *logging
+
+  ingest:
+    <<: *app
+    profiles: [maintenance]
+    restart: "no"
+    command: [python, scripts/ingest_manual.py]
+    environment: *app-environment
+    secrets: *app-secrets
+    depends_on:
+      bootstrap: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    healthcheck: {disable: true}
+
+networks:
+  app:
+  data:
+    internal: true
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_runtime:
+
+secrets:
+  postgres_password: {file: ./.secrets/postgres_password}
+  app_password: {file: ./.secrets/app_password}
+  query_password: {file: ./.secrets/query_password}
+  openai_api_key: {file: ./.secrets/openai_api_key}
+  gemini_api_key: {file: ./.secrets/gemini_api_key}
+  groq_api_key: {file: ./.secrets/groq_api_key}

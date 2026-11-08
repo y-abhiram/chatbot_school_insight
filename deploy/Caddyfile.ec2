@@ -1,0 +1,17 @@
+# Host Caddy service. Replace the hostname and contact email before installation.
+{
+	email admin@example.com
+}
+school.example.com {
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		Referrer-Policy same-origin
+		X-Frame-Options DENY
+		-Server
+	}
+	reverse_proxy 127.0.0.1:3080 {
+		flush_interval -1
+	}
+}

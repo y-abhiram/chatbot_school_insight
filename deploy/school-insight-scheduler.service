@@ -1,0 +1,14 @@
+[Unit]
+Description=School Insight backup scheduler
+After=network-online.target
+[Service]
+Type=simple
+User=jony
+WorkingDirectory=/home/jony/Documents/chat
+ExecStart=/home/jony/miniconda3/bin/python -m celery -A product.jobs.celery beat --loglevel=warning --schedule .runtime/celerybeat-schedule
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+[Install]
+WantedBy=multi-user.target

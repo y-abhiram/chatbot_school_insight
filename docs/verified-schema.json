@@ -1,0 +1,4033 @@
+{
+  "schema": "school",
+  "tables": {
+    "roles": {
+      "columns": [
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "role_name",
+          "type": "VARCHAR(30)",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(150)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "role_id"
+        ],
+        "name": "roles_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "roles_role_name_key",
+          "unique": true,
+          "column_names": [
+            "role_name"
+          ],
+          "duplicates_constraint": "roles_role_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "role_name"
+          ],
+          "name": "roles_role_name_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "users": {
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "role_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "username",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        },
+        {
+          "name": "password_hash",
+          "type": "VARCHAR(255)",
+          "nullable": false
+        },
+        {
+          "name": "first_name",
+          "type": "VARCHAR(50)",
+          "nullable": false
+        },
+        {
+          "name": "last_name",
+          "type": "VARCHAR(50)",
+          "nullable": true
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "phone",
+          "type": "VARCHAR(15)",
+          "nullable": true
+        },
+        {
+          "name": "is_active",
+          "type": "BOOLEAN",
+          "nullable": false
+        },
+        {
+          "name": "last_login",
+          "type": "TIMESTAMP",
+          "nullable": true
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "users_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "users_role_id_fkey",
+          "constrained_columns": [
+            "role_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "roles",
+          "referred_columns": [
+            "role_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_users_role",
+          "unique": false,
+          "column_names": [
+            "role_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "users_email_key",
+          "unique": true,
+          "column_names": [
+            "email"
+          ],
+          "duplicates_constraint": "users_email_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "users_username_key",
+          "unique": true,
+          "column_names": [
+            "username"
+          ],
+          "duplicates_constraint": "users_username_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "email"
+          ],
+          "name": "users_email_key",
+          "comment": null
+        },
+        {
+          "column_names": [
+            "username"
+          ],
+          "name": "users_username_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "admins": {
+      "columns": [
+        {
+          "name": "admin_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "designation",
+          "type": "VARCHAR(50)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "admin_id"
+        ],
+        "name": "admins_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "admins_user_id_fkey",
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "admins_user_id_key",
+          "unique": true,
+          "column_names": [
+            "user_id"
+          ],
+          "duplicates_constraint": "admins_user_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "user_id"
+          ],
+          "name": "admins_user_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "faculty": {
+      "columns": [
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "employee_no",
+          "type": "VARCHAR(20)",
+          "nullable": false
+        },
+        {
+          "name": "designation",
+          "type": "VARCHAR(50)",
+          "nullable": true
+        },
+        {
+          "name": "qualification",
+          "type": "VARCHAR(100)",
+          "nullable": true
+        },
+        {
+          "name": "joining_date",
+          "type": "DATE",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "faculty_id"
+        ],
+        "name": "faculty_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "faculty_user_id_fkey",
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "faculty_employee_no_key",
+          "unique": true,
+          "column_names": [
+            "employee_no"
+          ],
+          "duplicates_constraint": "faculty_employee_no_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "faculty_user_id_key",
+          "unique": true,
+          "column_names": [
+            "user_id"
+          ],
+          "duplicates_constraint": "faculty_user_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "employee_no"
+          ],
+          "name": "faculty_employee_no_key",
+          "comment": null
+        },
+        {
+          "column_names": [
+            "user_id"
+          ],
+          "name": "faculty_user_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "classes": {
+      "columns": [
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "class_name",
+          "type": "VARCHAR(30)",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "class_id"
+        ],
+        "name": "classes_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "classes_class_name_key",
+          "unique": true,
+          "column_names": [
+            "class_name"
+          ],
+          "duplicates_constraint": "classes_class_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "class_name"
+          ],
+          "name": "classes_class_name_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "sections": {
+      "columns": [
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "academic_year_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "section_name",
+          "type": "VARCHAR(5)",
+          "nullable": false
+        },
+        {
+          "name": "class_teacher_id",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "section_id"
+        ],
+        "name": "sections_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "sections_academic_year_id_fkey",
+          "constrained_columns": [
+            "academic_year_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "academic_years",
+          "referred_columns": [
+            "academic_year_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "sections_class_id_fkey",
+          "constrained_columns": [
+            "class_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "classes",
+          "referred_columns": [
+            "class_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "sections_class_teacher_id_fkey",
+          "constrained_columns": [
+            "class_teacher_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_sections_class",
+          "unique": false,
+          "column_names": [
+            "class_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_sections_teacher",
+          "unique": false,
+          "column_names": [
+            "class_teacher_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "sections_class_id_academic_year_id_section_name_key",
+          "unique": true,
+          "column_names": [
+            "class_id",
+            "academic_year_id",
+            "section_name"
+          ],
+          "duplicates_constraint": "sections_class_id_academic_year_id_section_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "class_id",
+            "academic_year_id",
+            "section_name"
+          ],
+          "name": "sections_class_id_academic_year_id_section_name_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "academic_years": {
+      "columns": [
+        {
+          "name": "academic_year_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "year_name",
+          "type": "VARCHAR(20)",
+          "nullable": false
+        },
+        {
+          "name": "start_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "end_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "is_current",
+          "type": "BOOLEAN",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "academic_year_id"
+        ],
+        "name": "academic_years_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "academic_years_year_name_key",
+          "unique": true,
+          "column_names": [
+            "year_name"
+          ],
+          "duplicates_constraint": "academic_years_year_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "year_name"
+          ],
+          "name": "academic_years_year_name_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "academic_years_check",
+          "sqltext": "end_date > start_date",
+          "comment": null
+        }
+      ]
+    },
+    "students": {
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "admission_no",
+          "type": "VARCHAR(20)",
+          "nullable": false
+        },
+        {
+          "name": "roll_no",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "date_of_birth",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "gender",
+          "type": "VARCHAR(10)",
+          "nullable": true
+        },
+        {
+          "name": "guardian_name",
+          "type": "VARCHAR(80)",
+          "nullable": true
+        },
+        {
+          "name": "guardian_phone",
+          "type": "VARCHAR(15)",
+          "nullable": true
+        },
+        {
+          "name": "address",
+          "type": "VARCHAR(200)",
+          "nullable": true
+        },
+        {
+          "name": "admission_date",
+          "type": "DATE",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "student_id"
+        ],
+        "name": "students_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "students_section_id_fkey",
+          "constrained_columns": [
+            "section_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "sections",
+          "referred_columns": [
+            "section_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "students_user_id_fkey",
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_students_section",
+          "unique": false,
+          "column_names": [
+            "section_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "students_admission_no_key",
+          "unique": true,
+          "column_names": [
+            "admission_no"
+          ],
+          "duplicates_constraint": "students_admission_no_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "students_user_id_key",
+          "unique": true,
+          "column_names": [
+            "user_id"
+          ],
+          "duplicates_constraint": "students_user_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "admission_no"
+          ],
+          "name": "students_admission_no_key",
+          "comment": null
+        },
+        {
+          "column_names": [
+            "user_id"
+          ],
+          "name": "students_user_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "students_gender_check",
+          "sqltext": "gender::text = ANY (ARRAY['Male'::character varying, 'Female'::character varying, 'Other'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "course_assignments": {
+      "columns": [
+        {
+          "name": "assignment_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "academic_year_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "classroom_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "periods_per_week",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "assignment_id"
+        ],
+        "name": "course_assignments_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "course_assignments_academic_year_id_fkey",
+          "constrained_columns": [
+            "academic_year_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "academic_years",
+          "referred_columns": [
+            "academic_year_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "course_assignments_classroom_id_fkey",
+          "constrained_columns": [
+            "classroom_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "classrooms",
+          "referred_columns": [
+            "classroom_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "course_assignments_faculty_id_fkey",
+          "constrained_columns": [
+            "faculty_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "course_assignments_section_id_fkey",
+          "constrained_columns": [
+            "section_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "sections",
+          "referred_columns": [
+            "section_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "course_assignments_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "course_assignments_academic_year_id_section_id_subject_id_key",
+          "unique": true,
+          "column_names": [
+            "academic_year_id",
+            "section_id",
+            "subject_id"
+          ],
+          "duplicates_constraint": "course_assignments_academic_year_id_section_id_subject_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_course_asg_faculty",
+          "unique": false,
+          "column_names": [
+            "faculty_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "academic_year_id",
+            "section_id",
+            "subject_id"
+          ],
+          "name": "course_assignments_academic_year_id_section_id_subject_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "subjects": {
+      "columns": [
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_code",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "subject_name",
+          "type": "VARCHAR(80)",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "VARCHAR(200)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "subject_id"
+        ],
+        "name": "subjects_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "subjects_subject_code_key",
+          "unique": true,
+          "column_names": [
+            "subject_code"
+          ],
+          "duplicates_constraint": "subjects_subject_code_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "subject_code"
+          ],
+          "name": "subjects_subject_code_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "classrooms": {
+      "columns": [
+        {
+          "name": "classroom_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "room_name",
+          "type": "VARCHAR(30)",
+          "nullable": false
+        },
+        {
+          "name": "room_type",
+          "type": "VARCHAR(15)",
+          "nullable": false
+        },
+        {
+          "name": "capacity",
+          "type": "INTEGER",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "classroom_id"
+        ],
+        "name": "classrooms_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "classrooms_room_name_key",
+          "unique": true,
+          "column_names": [
+            "room_name"
+          ],
+          "duplicates_constraint": "classrooms_room_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "room_name"
+          ],
+          "name": "classrooms_room_name_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "classrooms_capacity_check",
+          "sqltext": "capacity > 0",
+          "comment": null
+        },
+        {
+          "name": "classrooms_room_type_check",
+          "sqltext": "room_type::text = ANY (ARRAY['Classroom'::character varying, 'Lab'::character varying, 'Library'::character varying, 'Hall'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "timetable": {
+      "columns": [
+        {
+          "name": "timetable_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "day_of_week",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "period_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "classroom_id",
+          "type": "INTEGER",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "timetable_id"
+        ],
+        "name": "timetable_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "timetable_classroom_id_fkey",
+          "constrained_columns": [
+            "classroom_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "classrooms",
+          "referred_columns": [
+            "classroom_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "timetable_faculty_id_fkey",
+          "constrained_columns": [
+            "faculty_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "timetable_period_id_fkey",
+          "constrained_columns": [
+            "period_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "periods",
+          "referred_columns": [
+            "period_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "timetable_section_id_fkey",
+          "constrained_columns": [
+            "section_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "sections",
+          "referred_columns": [
+            "section_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "timetable_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_timetable_subject",
+          "unique": false,
+          "column_names": [
+            "subject_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "timetable_classroom_id_day_of_week_period_id_key",
+          "unique": true,
+          "column_names": [
+            "classroom_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "duplicates_constraint": "timetable_classroom_id_day_of_week_period_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "timetable_faculty_id_day_of_week_period_id_key",
+          "unique": true,
+          "column_names": [
+            "faculty_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "duplicates_constraint": "timetable_faculty_id_day_of_week_period_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "timetable_section_id_day_of_week_period_id_key",
+          "unique": true,
+          "column_names": [
+            "section_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "duplicates_constraint": "timetable_section_id_day_of_week_period_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "classroom_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "name": "timetable_classroom_id_day_of_week_period_id_key",
+          "comment": null
+        },
+        {
+          "column_names": [
+            "faculty_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "name": "timetable_faculty_id_day_of_week_period_id_key",
+          "comment": null
+        },
+        {
+          "column_names": [
+            "section_id",
+            "day_of_week",
+            "period_id"
+          ],
+          "name": "timetable_section_id_day_of_week_period_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "timetable_day_of_week_check",
+          "sqltext": "day_of_week::text = ANY (ARRAY['Monday'::character varying, 'Tuesday'::character varying, 'Wednesday'::character varying, 'Thursday'::character varying, 'Friday'::character varying, 'Saturday'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "periods": {
+      "columns": [
+        {
+          "name": "period_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "period_no",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "start_time",
+          "type": "TIME",
+          "nullable": false
+        },
+        {
+          "name": "end_time",
+          "type": "TIME",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "period_id"
+        ],
+        "name": "periods_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "periods_period_no_key",
+          "unique": true,
+          "column_names": [
+            "period_no"
+          ],
+          "duplicates_constraint": "periods_period_no_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "period_no"
+          ],
+          "name": "periods_period_no_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "periods_check",
+          "sqltext": "end_time > start_time",
+          "comment": null
+        }
+      ]
+    },
+    "student_attendance": {
+      "columns": [
+        {
+          "name": "attendance_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "attendance_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "period_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "marked_by",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "remarks",
+          "type": "VARCHAR(150)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "attendance_id"
+        ],
+        "name": "student_attendance_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "student_attendance_marked_by_fkey",
+          "constrained_columns": [
+            "marked_by"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "student_attendance_period_id_fkey",
+          "constrained_columns": [
+            "period_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "periods",
+          "referred_columns": [
+            "period_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "student_attendance_student_id_fkey",
+          "constrained_columns": [
+            "student_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "students",
+          "referred_columns": [
+            "student_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "student_attendance_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_stu_att_date",
+          "unique": false,
+          "column_names": [
+            "attendance_date"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_stu_att_student",
+          "unique": false,
+          "column_names": [
+            "student_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "student_attendance_student_id_attendance_date_period_id_key",
+          "unique": true,
+          "column_names": [
+            "student_id",
+            "attendance_date",
+            "period_id"
+          ],
+          "duplicates_constraint": "student_attendance_student_id_attendance_date_period_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "student_id",
+            "attendance_date",
+            "period_id"
+          ],
+          "name": "student_attendance_student_id_attendance_date_period_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "student_attendance_status_check",
+          "sqltext": "status::text = ANY (ARRAY['Present'::character varying, 'Absent'::character varying, 'Late'::character varying, 'Excused'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "faculty_attendance": {
+      "columns": [
+        {
+          "name": "attendance_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "attendance_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "check_in",
+          "type": "TIME",
+          "nullable": true
+        },
+        {
+          "name": "check_out",
+          "type": "TIME",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "attendance_id"
+        ],
+        "name": "faculty_attendance_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "faculty_attendance_faculty_id_fkey",
+          "constrained_columns": [
+            "faculty_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "faculty_attendance_faculty_id_attendance_date_key",
+          "unique": true,
+          "column_names": [
+            "faculty_id",
+            "attendance_date"
+          ],
+          "duplicates_constraint": "faculty_attendance_faculty_id_attendance_date_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_fac_att_date",
+          "unique": false,
+          "column_names": [
+            "attendance_date"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "faculty_id",
+            "attendance_date"
+          ],
+          "name": "faculty_attendance_faculty_id_attendance_date_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "faculty_attendance_status_check",
+          "sqltext": "status::text = ANY (ARRAY['Present'::character varying, 'Absent'::character varying, 'Late'::character varying, 'On Leave'::character varying, 'Half Day'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "leave_requests": {
+      "columns": [
+        {
+          "name": "leave_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "applicant_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "leave_type_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "from_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "to_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "reason",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "applied_on",
+          "type": "TIMESTAMP",
+          "nullable": false
+        },
+        {
+          "name": "reviewed_by",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "reviewed_on",
+          "type": "TIMESTAMP",
+          "nullable": true
+        },
+        {
+          "name": "admin_remarks",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "leave_id"
+        ],
+        "name": "leave_requests_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "leave_requests_applicant_id_fkey",
+          "constrained_columns": [
+            "applicant_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "leave_requests_leave_type_id_fkey",
+          "constrained_columns": [
+            "leave_type_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "leave_types",
+          "referred_columns": [
+            "leave_type_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "leave_requests_reviewed_by_fkey",
+          "constrained_columns": [
+            "reviewed_by"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_leave_applicant",
+          "unique": false,
+          "column_names": [
+            "applicant_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_leave_status",
+          "unique": false,
+          "column_names": [
+            "status"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "checks": [
+        {
+          "name": "leave_requests_check",
+          "sqltext": "to_date >= from_date",
+          "comment": null
+        },
+        {
+          "name": "leave_requests_status_check",
+          "sqltext": "status::text = ANY (ARRAY['Pending'::character varying, 'Approved'::character varying, 'Rejected'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "leave_types": {
+      "columns": [
+        {
+          "name": "leave_type_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "type_name",
+          "type": "VARCHAR(40)",
+          "nullable": false
+        },
+        {
+          "name": "max_days_year",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "leave_type_id"
+        ],
+        "name": "leave_types_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "leave_types_type_name_key",
+          "unique": true,
+          "column_names": [
+            "type_name"
+          ],
+          "duplicates_constraint": "leave_types_type_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "type_name"
+          ],
+          "name": "leave_types_type_name_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "homework": {
+      "columns": [
+        {
+          "name": "homework_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(150)",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "assigned_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "due_date",
+          "type": "DATE",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "homework_id"
+        ],
+        "name": "homework_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "homework_faculty_id_fkey",
+          "constrained_columns": [
+            "faculty_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "homework_section_id_fkey",
+          "constrained_columns": [
+            "section_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "sections",
+          "referred_columns": [
+            "section_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "homework_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_homework_section",
+          "unique": false,
+          "column_names": [
+            "section_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "checks": [
+        {
+          "name": "homework_check",
+          "sqltext": "due_date >= assigned_date",
+          "comment": null
+        }
+      ]
+    },
+    "homework_submissions": {
+      "columns": [
+        {
+          "name": "submission_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "homework_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "submitted_on",
+          "type": "TIMESTAMP",
+          "nullable": true
+        },
+        {
+          "name": "file_path",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "faculty_remarks",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "submission_id"
+        ],
+        "name": "homework_submissions_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "homework_submissions_homework_id_fkey",
+          "constrained_columns": [
+            "homework_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "homework",
+          "referred_columns": [
+            "homework_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "homework_submissions_student_id_fkey",
+          "constrained_columns": [
+            "student_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "students",
+          "referred_columns": [
+            "student_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "homework_submissions_homework_id_student_id_key",
+          "unique": true,
+          "column_names": [
+            "homework_id",
+            "student_id"
+          ],
+          "duplicates_constraint": "homework_submissions_homework_id_student_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_hw_sub_student",
+          "unique": false,
+          "column_names": [
+            "student_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "homework_id",
+            "student_id"
+          ],
+          "name": "homework_submissions_homework_id_student_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "homework_submissions_status_check",
+          "sqltext": "status::text = ANY (ARRAY['Pending'::character varying, 'Submitted'::character varying, 'Late'::character varying, 'Checked'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "assignments": {
+      "columns": [
+        {
+          "name": "assignment_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "section_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "faculty_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(150)",
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "max_marks",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false
+        },
+        {
+          "name": "assigned_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "due_date",
+          "type": "DATE",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "assignment_id"
+        ],
+        "name": "assignments_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "assignments_faculty_id_fkey",
+          "constrained_columns": [
+            "faculty_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "assignments_section_id_fkey",
+          "constrained_columns": [
+            "section_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "sections",
+          "referred_columns": [
+            "section_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "assignments_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_assignments_section",
+          "unique": false,
+          "column_names": [
+            "section_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "checks": [
+        {
+          "name": "assignments_check",
+          "sqltext": "due_date >= assigned_date",
+          "comment": null
+        }
+      ]
+    },
+    "assignment_submissions": {
+      "columns": [
+        {
+          "name": "submission_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "assignment_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "submitted_on",
+          "type": "TIMESTAMP",
+          "nullable": true
+        },
+        {
+          "name": "file_path",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "marks_obtained",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(10)",
+          "nullable": false
+        },
+        {
+          "name": "feedback",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "submission_id"
+        ],
+        "name": "assignment_submissions_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "assignment_submissions_assignment_id_fkey",
+          "constrained_columns": [
+            "assignment_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "assignments",
+          "referred_columns": [
+            "assignment_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "assignment_submissions_student_id_fkey",
+          "constrained_columns": [
+            "student_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "students",
+          "referred_columns": [
+            "student_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "assignment_submissions_assignment_id_student_id_key",
+          "unique": true,
+          "column_names": [
+            "assignment_id",
+            "student_id"
+          ],
+          "duplicates_constraint": "assignment_submissions_assignment_id_student_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_asg_sub_student",
+          "unique": false,
+          "column_names": [
+            "student_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "assignment_id",
+            "student_id"
+          ],
+          "name": "assignment_submissions_assignment_id_student_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "assignment_submissions_status_check",
+          "sqltext": "status::text = ANY (ARRAY['Pending'::character varying, 'Submitted'::character varying, 'Late'::character varying, 'Graded'::character varying]::text[])",
+          "comment": null
+        }
+      ]
+    },
+    "exams": {
+      "columns": [
+        {
+          "name": "exam_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "academic_year_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_type_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "class_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_name",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "start_date",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "end_date",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "created_by",
+          "type": "INTEGER",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "exam_id"
+        ],
+        "name": "exams_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "exams_academic_year_id_fkey",
+          "constrained_columns": [
+            "academic_year_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "academic_years",
+          "referred_columns": [
+            "academic_year_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exams_class_id_fkey",
+          "constrained_columns": [
+            "class_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "classes",
+          "referred_columns": [
+            "class_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exams_created_by_fkey",
+          "constrained_columns": [
+            "created_by"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exams_exam_type_id_fkey",
+          "constrained_columns": [
+            "exam_type_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "exam_types",
+          "referred_columns": [
+            "exam_type_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_exams_class",
+          "unique": false,
+          "column_names": [
+            "class_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "checks": []
+    },
+    "exam_types": {
+      "columns": [
+        {
+          "name": "exam_type_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "type_name",
+          "type": "VARCHAR(40)",
+          "nullable": false
+        },
+        {
+          "name": "weightage",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "exam_type_id"
+        ],
+        "name": "exam_types_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "exam_types_type_name_key",
+          "unique": true,
+          "column_names": [
+            "type_name"
+          ],
+          "duplicates_constraint": "exam_types_type_name_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "type_name"
+          ],
+          "name": "exam_types_type_name_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "exam_schedules": {
+      "columns": [
+        {
+          "name": "exam_schedule_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_date",
+          "type": "DATE",
+          "nullable": false
+        },
+        {
+          "name": "start_time",
+          "type": "TIME",
+          "nullable": false
+        },
+        {
+          "name": "end_time",
+          "type": "TIME",
+          "nullable": false
+        },
+        {
+          "name": "classroom_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "invigilator_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "max_marks",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false
+        },
+        {
+          "name": "pass_marks",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "exam_schedule_id"
+        ],
+        "name": "exam_schedules_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "exam_schedules_classroom_id_fkey",
+          "constrained_columns": [
+            "classroom_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "classrooms",
+          "referred_columns": [
+            "classroom_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exam_schedules_exam_id_fkey",
+          "constrained_columns": [
+            "exam_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "exams",
+          "referred_columns": [
+            "exam_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exam_schedules_invigilator_id_fkey",
+          "constrained_columns": [
+            "invigilator_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "exam_schedules_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "exam_schedules_exam_id_subject_id_key",
+          "unique": true,
+          "column_names": [
+            "exam_id",
+            "subject_id"
+          ],
+          "duplicates_constraint": "exam_schedules_exam_id_subject_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "exam_id",
+            "subject_id"
+          ],
+          "name": "exam_schedules_exam_id_subject_id_key",
+          "comment": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "exam_schedules_check",
+          "sqltext": "pass_marks <= max_marks",
+          "comment": null
+        }
+      ]
+    },
+    "marks": {
+      "columns": [
+        {
+          "name": "mark_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_schedule_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "marks_obtained",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "is_absent",
+          "type": "BOOLEAN",
+          "nullable": false
+        },
+        {
+          "name": "grade_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "entered_by",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "entered_on",
+          "type": "TIMESTAMP",
+          "nullable": false
+        },
+        {
+          "name": "remarks",
+          "type": "VARCHAR(150)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "mark_id"
+        ],
+        "name": "marks_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "marks_entered_by_fkey",
+          "constrained_columns": [
+            "entered_by"
+          ],
+          "referred_schema": "school",
+          "referred_table": "faculty",
+          "referred_columns": [
+            "faculty_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "marks_exam_schedule_id_fkey",
+          "constrained_columns": [
+            "exam_schedule_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "exam_schedules",
+          "referred_columns": [
+            "exam_schedule_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "marks_grade_id_fkey",
+          "constrained_columns": [
+            "grade_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "grade_scale",
+          "referred_columns": [
+            "grade_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "marks_student_id_fkey",
+          "constrained_columns": [
+            "student_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "students",
+          "referred_columns": [
+            "student_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_marks_student",
+          "unique": false,
+          "column_names": [
+            "student_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "marks_exam_schedule_id_student_id_key",
+          "unique": true,
+          "column_names": [
+            "exam_schedule_id",
+            "student_id"
+          ],
+          "duplicates_constraint": "marks_exam_schedule_id_student_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "exam_schedule_id",
+            "student_id"
+          ],
+          "name": "marks_exam_schedule_id_student_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "grade_scale": {
+      "columns": [
+        {
+          "name": "grade_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "grade",
+          "type": "VARCHAR(3)",
+          "nullable": false
+        },
+        {
+          "name": "min_percent",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false
+        },
+        {
+          "name": "max_percent",
+          "type": "NUMERIC(5, 2)",
+          "nullable": false
+        },
+        {
+          "name": "grade_point",
+          "type": "NUMERIC(3, 1)",
+          "nullable": true
+        },
+        {
+          "name": "remark",
+          "type": "VARCHAR(40)",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "grade_id"
+        ],
+        "name": "grade_scale_pkey",
+        "comment": null
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "grade_scale_grade_key",
+          "unique": true,
+          "column_names": [
+            "grade"
+          ],
+          "duplicates_constraint": "grade_scale_grade_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "grade"
+          ],
+          "name": "grade_scale_grade_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "progress_reports": {
+      "columns": [
+        {
+          "name": "report_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "student_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "exam_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "total_max_marks",
+          "type": "NUMERIC(7, 2)",
+          "nullable": true
+        },
+        {
+          "name": "total_obtained",
+          "type": "NUMERIC(7, 2)",
+          "nullable": true
+        },
+        {
+          "name": "percentage",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "grade_id",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "attendance_pct",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "class_rank",
+          "type": "INTEGER",
+          "nullable": true
+        },
+        {
+          "name": "teacher_remarks",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "generated_by",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "generated_on",
+          "type": "TIMESTAMP",
+          "nullable": false
+        },
+        {
+          "name": "is_published",
+          "type": "BOOLEAN",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "report_id"
+        ],
+        "name": "progress_reports_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "progress_reports_exam_id_fkey",
+          "constrained_columns": [
+            "exam_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "exams",
+          "referred_columns": [
+            "exam_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "progress_reports_generated_by_fkey",
+          "constrained_columns": [
+            "generated_by"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "progress_reports_grade_id_fkey",
+          "constrained_columns": [
+            "grade_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "grade_scale",
+          "referred_columns": [
+            "grade_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "progress_reports_student_id_fkey",
+          "constrained_columns": [
+            "student_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "students",
+          "referred_columns": [
+            "student_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_reports_exam",
+          "unique": false,
+          "column_names": [
+            "exam_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "progress_reports_student_id_exam_id_key",
+          "unique": true,
+          "column_names": [
+            "student_id",
+            "exam_id"
+          ],
+          "duplicates_constraint": "progress_reports_student_id_exam_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "student_id",
+            "exam_id"
+          ],
+          "name": "progress_reports_student_id_exam_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "progress_report_items": {
+      "columns": [
+        {
+          "name": "item_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "report_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "subject_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "max_marks",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "marks_obtained",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true
+        },
+        {
+          "name": "grade_id",
+          "type": "INTEGER",
+          "nullable": true
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "item_id"
+        ],
+        "name": "progress_report_items_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "progress_report_items_grade_id_fkey",
+          "constrained_columns": [
+            "grade_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "grade_scale",
+          "referred_columns": [
+            "grade_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "progress_report_items_report_id_fkey",
+          "constrained_columns": [
+            "report_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "progress_reports",
+          "referred_columns": [
+            "report_id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "progress_report_items_subject_id_fkey",
+          "constrained_columns": [
+            "subject_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "subjects",
+          "referred_columns": [
+            "subject_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "progress_report_items_report_id_subject_id_key",
+          "unique": true,
+          "column_names": [
+            "report_id",
+            "subject_id"
+          ],
+          "duplicates_constraint": "progress_report_items_report_id_subject_id_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [
+        {
+          "column_names": [
+            "report_id",
+            "subject_id"
+          ],
+          "name": "progress_report_items_report_id_subject_id_key",
+          "comment": null
+        }
+      ],
+      "checks": []
+    },
+    "notifications": {
+      "columns": [
+        {
+          "name": "notification_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "user_id",
+          "type": "INTEGER",
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "type": "VARCHAR(100)",
+          "nullable": false
+        },
+        {
+          "name": "message",
+          "type": "VARCHAR(255)",
+          "nullable": true
+        },
+        {
+          "name": "is_read",
+          "type": "BOOLEAN",
+          "nullable": false
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "notification_id"
+        ],
+        "name": "notifications_pkey",
+        "comment": null
+      },
+      "foreign_keys": [
+        {
+          "name": "notifications_user_id_fkey",
+          "constrained_columns": [
+            "user_id"
+          ],
+          "referred_schema": "school",
+          "referred_table": "users",
+          "referred_columns": [
+            "user_id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_notif_user",
+          "unique": false,
+          "column_names": [
+            "user_id",
+            "is_read"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "unique_constraints": [],
+      "checks": []
+    }
+  },
+  "views": {
+    "v_student_attendance_report": {
+      "definition": " SELECT s.student_id,\n    s.admission_no,\n    (((u.first_name)::text || ' '::text) || (COALESCE(u.last_name, ''::character varying))::text) AS student_name,\n    c.class_name,\n    sec.section_name,\n    count(*) AS total_periods,\n    sum(\n        CASE\n            WHEN ((sa.status)::text = ANY ((ARRAY['Present'::character varying, 'Late'::character varying])::text[])) THEN 1\n            ELSE 0\n        END) AS attended,\n    round(((100.0 * (sum(\n        CASE\n            WHEN ((sa.status)::text = ANY ((ARRAY['Present'::character varying, 'Late'::character varying])::text[])) THEN 1\n            ELSE 0\n        END))::numeric) / (count(*))::numeric), 2) AS attendance_pct\n   FROM ((((student_attendance sa\n     JOIN students s ON ((s.student_id = sa.student_id)))\n     JOIN users u ON ((u.user_id = s.user_id)))\n     JOIN sections sec ON ((sec.section_id = s.section_id)))\n     JOIN classes c ON ((c.class_id = sec.class_id)))\n  GROUP BY s.student_id, s.admission_no, u.first_name, u.last_name, c.class_name, sec.section_name;",
+      "columns": [
+        {
+          "name": "student_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "admission_no",
+          "type": "VARCHAR(20)"
+        },
+        {
+          "name": "student_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "class_name",
+          "type": "VARCHAR(30)"
+        },
+        {
+          "name": "section_name",
+          "type": "VARCHAR(5)"
+        },
+        {
+          "name": "total_periods",
+          "type": "BIGINT"
+        },
+        {
+          "name": "attended",
+          "type": "BIGINT"
+        },
+        {
+          "name": "attendance_pct",
+          "type": "NUMERIC"
+        }
+      ]
+    },
+    "v_exam_report": {
+      "definition": " SELECT e.exam_name,\n    (((u.first_name)::text || ' '::text) || (COALESCE(u.last_name, ''::character varying))::text) AS student_name,\n    sub.subject_name,\n    es.max_marks,\n    m.marks_obtained,\n        CASE\n            WHEN (m.marks_obtained >= es.pass_marks) THEN 'Pass'::text\n            ELSE 'Fail'::text\n        END AS result,\n    g.grade\n   FROM ((((((marks m\n     JOIN exam_schedules es ON ((es.exam_schedule_id = m.exam_schedule_id)))\n     JOIN exams e ON ((e.exam_id = es.exam_id)))\n     JOIN subjects sub ON ((sub.subject_id = es.subject_id)))\n     JOIN students s ON ((s.student_id = m.student_id)))\n     JOIN users u ON ((u.user_id = s.user_id)))\n     LEFT JOIN grade_scale g ON ((g.grade_id = m.grade_id)));",
+      "columns": [
+        {
+          "name": "exam_name",
+          "type": "VARCHAR(100)"
+        },
+        {
+          "name": "student_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "subject_name",
+          "type": "VARCHAR(80)"
+        },
+        {
+          "name": "max_marks",
+          "type": "NUMERIC(5, 2)"
+        },
+        {
+          "name": "marks_obtained",
+          "type": "NUMERIC(5, 2)"
+        },
+        {
+          "name": "result",
+          "type": "TEXT"
+        },
+        {
+          "name": "grade",
+          "type": "VARCHAR(3)"
+        }
+      ]
+    },
+    "v_pending_leaves": {
+      "definition": " SELECT lr.leave_id,\n    (((u.first_name)::text || ' '::text) || (COALESCE(u.last_name, ''::character varying))::text) AS applicant,\n    r.role_name,\n    lt.type_name,\n    lr.from_date,\n    lr.to_date,\n    lr.reason\n   FROM (((leave_requests lr\n     JOIN users u ON ((u.user_id = lr.applicant_id)))\n     JOIN roles r ON ((r.role_id = u.role_id)))\n     JOIN leave_types lt ON ((lt.leave_type_id = lr.leave_type_id)))\n  WHERE ((lr.status)::text = 'Pending'::text);",
+      "columns": [
+        {
+          "name": "leave_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "applicant",
+          "type": "TEXT"
+        },
+        {
+          "name": "role_name",
+          "type": "VARCHAR(30)"
+        },
+        {
+          "name": "type_name",
+          "type": "VARCHAR(40)"
+        },
+        {
+          "name": "from_date",
+          "type": "DATE"
+        },
+        {
+          "name": "to_date",
+          "type": "DATE"
+        },
+        {
+          "name": "reason",
+          "type": "VARCHAR(255)"
+        }
+      ]
+    },
+    "v_timetable": {
+      "definition": " SELECT sec.section_id,\n    (((c.class_name)::text || '-'::text) || (sec.section_name)::text) AS section,\n    t.day_of_week,\n    p.period_no,\n    p.start_time,\n    p.end_time,\n    sub.subject_name,\n    (((u.first_name)::text || ' '::text) || (COALESCE(u.last_name, ''::character varying))::text) AS faculty_name,\n    cr.room_name\n   FROM (((((((timetable t\n     JOIN sections sec ON ((sec.section_id = t.section_id)))\n     JOIN classes c ON ((c.class_id = sec.class_id)))\n     JOIN periods p ON ((p.period_id = t.period_id)))\n     JOIN subjects sub ON ((sub.subject_id = t.subject_id)))\n     JOIN faculty f ON ((f.faculty_id = t.faculty_id)))\n     JOIN users u ON ((u.user_id = f.user_id)))\n     JOIN classrooms cr ON ((cr.classroom_id = t.classroom_id)));",
+      "columns": [
+        {
+          "name": "section_id",
+          "type": "INTEGER"
+        },
+        {
+          "name": "section",
+          "type": "TEXT"
+        },
+        {
+          "name": "day_of_week",
+          "type": "VARCHAR(10)"
+        },
+        {
+          "name": "period_no",
+          "type": "INTEGER"
+        },
+        {
+          "name": "start_time",
+          "type": "TIME"
+        },
+        {
+          "name": "end_time",
+          "type": "TIME"
+        },
+        {
+          "name": "subject_name",
+          "type": "VARCHAR(80)"
+        },
+        {
+          "name": "faculty_name",
+          "type": "TEXT"
+        },
+        {
+          "name": "room_name",
+          "type": "VARCHAR(30)"
+        }
+      ]
+    }
+  },
+  "verified_counts": {
+    "users": 8,
+    "students": 4,
+    "faculty": 3,
+    "timetable": 8,
+    "marks": 6,
+    "pending_leaves": 1
+  },
+  "foreign_keys": [
+    {
+      "table": "users",
+      "name": "users_role_id_fkey",
+      "constrained_columns": [
+        "role_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "roles",
+      "referred_columns": [
+        "role_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "admins",
+      "name": "admins_user_id_fkey",
+      "constrained_columns": [
+        "user_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "faculty",
+      "name": "faculty_user_id_fkey",
+      "constrained_columns": [
+        "user_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "sections",
+      "name": "sections_academic_year_id_fkey",
+      "constrained_columns": [
+        "academic_year_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "academic_years",
+      "referred_columns": [
+        "academic_year_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "sections",
+      "name": "sections_class_id_fkey",
+      "constrained_columns": [
+        "class_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "classes",
+      "referred_columns": [
+        "class_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "sections",
+      "name": "sections_class_teacher_id_fkey",
+      "constrained_columns": [
+        "class_teacher_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "students",
+      "name": "students_section_id_fkey",
+      "constrained_columns": [
+        "section_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "sections",
+      "referred_columns": [
+        "section_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "students",
+      "name": "students_user_id_fkey",
+      "constrained_columns": [
+        "user_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "course_assignments",
+      "name": "course_assignments_academic_year_id_fkey",
+      "constrained_columns": [
+        "academic_year_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "academic_years",
+      "referred_columns": [
+        "academic_year_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "course_assignments",
+      "name": "course_assignments_classroom_id_fkey",
+      "constrained_columns": [
+        "classroom_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "classrooms",
+      "referred_columns": [
+        "classroom_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "course_assignments",
+      "name": "course_assignments_faculty_id_fkey",
+      "constrained_columns": [
+        "faculty_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "course_assignments",
+      "name": "course_assignments_section_id_fkey",
+      "constrained_columns": [
+        "section_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "sections",
+      "referred_columns": [
+        "section_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "course_assignments",
+      "name": "course_assignments_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "timetable",
+      "name": "timetable_classroom_id_fkey",
+      "constrained_columns": [
+        "classroom_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "classrooms",
+      "referred_columns": [
+        "classroom_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "timetable",
+      "name": "timetable_faculty_id_fkey",
+      "constrained_columns": [
+        "faculty_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "timetable",
+      "name": "timetable_period_id_fkey",
+      "constrained_columns": [
+        "period_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "periods",
+      "referred_columns": [
+        "period_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "timetable",
+      "name": "timetable_section_id_fkey",
+      "constrained_columns": [
+        "section_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "sections",
+      "referred_columns": [
+        "section_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "timetable",
+      "name": "timetable_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "student_attendance",
+      "name": "student_attendance_marked_by_fkey",
+      "constrained_columns": [
+        "marked_by"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "student_attendance",
+      "name": "student_attendance_period_id_fkey",
+      "constrained_columns": [
+        "period_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "periods",
+      "referred_columns": [
+        "period_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "student_attendance",
+      "name": "student_attendance_student_id_fkey",
+      "constrained_columns": [
+        "student_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "students",
+      "referred_columns": [
+        "student_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "student_attendance",
+      "name": "student_attendance_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "faculty_attendance",
+      "name": "faculty_attendance_faculty_id_fkey",
+      "constrained_columns": [
+        "faculty_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "leave_requests",
+      "name": "leave_requests_applicant_id_fkey",
+      "constrained_columns": [
+        "applicant_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "leave_requests",
+      "name": "leave_requests_leave_type_id_fkey",
+      "constrained_columns": [
+        "leave_type_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "leave_types",
+      "referred_columns": [
+        "leave_type_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "leave_requests",
+      "name": "leave_requests_reviewed_by_fkey",
+      "constrained_columns": [
+        "reviewed_by"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "homework",
+      "name": "homework_faculty_id_fkey",
+      "constrained_columns": [
+        "faculty_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "homework",
+      "name": "homework_section_id_fkey",
+      "constrained_columns": [
+        "section_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "sections",
+      "referred_columns": [
+        "section_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "homework",
+      "name": "homework_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "homework_submissions",
+      "name": "homework_submissions_homework_id_fkey",
+      "constrained_columns": [
+        "homework_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "homework",
+      "referred_columns": [
+        "homework_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "homework_submissions",
+      "name": "homework_submissions_student_id_fkey",
+      "constrained_columns": [
+        "student_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "students",
+      "referred_columns": [
+        "student_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "assignments",
+      "name": "assignments_faculty_id_fkey",
+      "constrained_columns": [
+        "faculty_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "assignments",
+      "name": "assignments_section_id_fkey",
+      "constrained_columns": [
+        "section_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "sections",
+      "referred_columns": [
+        "section_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "assignments",
+      "name": "assignments_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "assignment_submissions",
+      "name": "assignment_submissions_assignment_id_fkey",
+      "constrained_columns": [
+        "assignment_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "assignments",
+      "referred_columns": [
+        "assignment_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "assignment_submissions",
+      "name": "assignment_submissions_student_id_fkey",
+      "constrained_columns": [
+        "student_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "students",
+      "referred_columns": [
+        "student_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exams",
+      "name": "exams_academic_year_id_fkey",
+      "constrained_columns": [
+        "academic_year_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "academic_years",
+      "referred_columns": [
+        "academic_year_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exams",
+      "name": "exams_class_id_fkey",
+      "constrained_columns": [
+        "class_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "classes",
+      "referred_columns": [
+        "class_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exams",
+      "name": "exams_created_by_fkey",
+      "constrained_columns": [
+        "created_by"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exams",
+      "name": "exams_exam_type_id_fkey",
+      "constrained_columns": [
+        "exam_type_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "exam_types",
+      "referred_columns": [
+        "exam_type_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exam_schedules",
+      "name": "exam_schedules_classroom_id_fkey",
+      "constrained_columns": [
+        "classroom_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "classrooms",
+      "referred_columns": [
+        "classroom_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exam_schedules",
+      "name": "exam_schedules_exam_id_fkey",
+      "constrained_columns": [
+        "exam_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "exams",
+      "referred_columns": [
+        "exam_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exam_schedules",
+      "name": "exam_schedules_invigilator_id_fkey",
+      "constrained_columns": [
+        "invigilator_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "exam_schedules",
+      "name": "exam_schedules_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "marks",
+      "name": "marks_entered_by_fkey",
+      "constrained_columns": [
+        "entered_by"
+      ],
+      "referred_schema": "school",
+      "referred_table": "faculty",
+      "referred_columns": [
+        "faculty_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "marks",
+      "name": "marks_exam_schedule_id_fkey",
+      "constrained_columns": [
+        "exam_schedule_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "exam_schedules",
+      "referred_columns": [
+        "exam_schedule_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "marks",
+      "name": "marks_grade_id_fkey",
+      "constrained_columns": [
+        "grade_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "grade_scale",
+      "referred_columns": [
+        "grade_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "marks",
+      "name": "marks_student_id_fkey",
+      "constrained_columns": [
+        "student_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "students",
+      "referred_columns": [
+        "student_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_reports",
+      "name": "progress_reports_exam_id_fkey",
+      "constrained_columns": [
+        "exam_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "exams",
+      "referred_columns": [
+        "exam_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_reports",
+      "name": "progress_reports_generated_by_fkey",
+      "constrained_columns": [
+        "generated_by"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_reports",
+      "name": "progress_reports_grade_id_fkey",
+      "constrained_columns": [
+        "grade_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "grade_scale",
+      "referred_columns": [
+        "grade_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_reports",
+      "name": "progress_reports_student_id_fkey",
+      "constrained_columns": [
+        "student_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "students",
+      "referred_columns": [
+        "student_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_report_items",
+      "name": "progress_report_items_grade_id_fkey",
+      "constrained_columns": [
+        "grade_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "grade_scale",
+      "referred_columns": [
+        "grade_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_report_items",
+      "name": "progress_report_items_report_id_fkey",
+      "constrained_columns": [
+        "report_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "progress_reports",
+      "referred_columns": [
+        "report_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "progress_report_items",
+      "name": "progress_report_items_subject_id_fkey",
+      "constrained_columns": [
+        "subject_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "subjects",
+      "referred_columns": [
+        "subject_id"
+      ],
+      "options": {},
+      "comment": null
+    },
+    {
+      "table": "notifications",
+      "name": "notifications_user_id_fkey",
+      "constrained_columns": [
+        "user_id"
+      ],
+      "referred_schema": "school",
+      "referred_table": "users",
+      "referred_columns": [
+        "user_id"
+      ],
+      "options": {},
+      "comment": null
+    }
+  ]
+}
